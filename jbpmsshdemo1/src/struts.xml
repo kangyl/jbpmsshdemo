@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "struts-2.1.dtd">
+
+<struts>
+	<!-- 指定Web应用的默认编码集,相当于调用HttpServletRequest的setCharacterEncoding方法 -->
+    <constant name="struts.i18n.encoding" value="UTF-8"/>
+    <!-- 该属性指定需要Struts 2处理的请求后缀，该属性的默认值是action，即所有匹配*.action的请求都由Struts2处理。
+    如果用户需要指定多个请求后缀，则多个后缀之间以英文逗号（,）隔开。 -->
+    <constant name="struts.action.extension" value="html"/>
+    <!-- 设置浏览器是否缓存静态内容,默认值为true(生产环境下使用),开发阶段最好关闭 -->
+    <constant name="struts.serve.static.browserCache" value="false"/>
+    <!-- 当struts的配置文件修改后,系统是否自动重新加载该文件,默认值为false(生产环境下使用),开发阶段最好打开 -->
+    <constant name="struts.configuration.xml.reload" value="false"/>
+    <!-- 开发模式下使用,这样可以打印出更详细的错误信息 -->
+    <constant name="struts.devMode" value="true" />
+     <!-- 默认的视图主题 -->
+    <constant name="struts.ui.theme" value="simple" />
+    <constant name="struts.objectFactory" value="spring" />
+    <!-- 全局 -->
+ 	<package name="global" namespace="/" extends="struts-default">
+ 		<global-results>
+ 			<result type="redirect">index.jsp</result>
+ 			<result name="login" >login.jsp</result>
+ 		</global-results>
+    </package> 
+	
+	
+	<package name="user" extends="json-default" >
+		<action name="user" class="com.kyl.action.UserAction">
+			<result name="success">success.jsp</result>
+			<!--   <result name="addUser" type="redirect">userAction!fetchUserList</result> 
+			<result name="deleteUser" type="json"></result> -->
+		</action>
+	</package>
+	<package name="web" namespace="/" extends="global">
+		<interceptors>
+			<interceptor name="loginInterceptor" class="com.jbpm.interceptor.LoginInterceptor">
+			</interceptor>
+			<interceptor-stack name="myAdminStack">
+				<interceptor-ref name="loginInterceptor">
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="myAdminStack" />
+		<default-action-ref name="index"></default-action-ref>
+		<action name="index" class="com.jbpm.action.JbpmAction" method="init">
+			<result>index.jsp</result>
+		</action>
+		<action name="*" class="com.jbpm.action.JbpmAction" method="{1}">
+		</action>
+		<action name="login" class="com.jbpm.action.LoginAction" method="login">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		<action name="unlogin" class="com.jbpm.action.LoginAction" method="unlogin">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		<action name="request" class="com.jbpm.action.JbpmAction" method="request">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result>/request.jsp</result>
+		</action>
+		<action name="manager" class="com.jbpm.action.JbpmAction" method="managerRequerst">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result>/manager.jsp</result>
+		</action>
+		<action name="boss" class="com.jbpm.action.JbpmAction" method="bossRequest">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result>/boss.jsp</result>
+		</action>
+		<action name="view" class="com.jbpm.action.JbpmAction" method="view">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result>/view.jsp</result>
+		</action>
+	</package>
+</struts>
