@@ -29,7 +29,7 @@
 			<legend>
 				老板审核
 			</legend>
-			<form action="submitBoss.html" method="post">
+			<form action="${pageContext.request.contextPath}/jbpm_submitBoss.action" method="post">
 				<input type="hidden" name="id" value="${param.id}">
 				申请人：
 				<s:property value="map['owner']" />

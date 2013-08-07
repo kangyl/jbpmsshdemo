@@ -23,28 +23,28 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class JbpmAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
-	// Á÷³Ì¶¨Òå¼¯ºÏ
+	// ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½å¼¯ï¿½ï¿½
 	private List<ProcessDefinition> processDefinitions;
-	// Á÷³ÌÊµÀý¼¯ºÏ
+	// ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½
 	private List<ProcessInstance> processInstances;
-	// Á÷³Ì²ÎÊý¼¯ºÏ
+	// ï¿½ï¿½ï¿½Ì²ï¿½ï¿½ï¿½ï¿½
 	private Map<String, Object> map;
-	// ÀúÊ·Á÷³Ì
+	// ï¿½ï¿½Ê·ï¿½ï¿½ï¿½ï¿½
 	private List<HistoryProcessInstance> historyProcessInstances;
-	// µ±Ç°ÓÃ»§ÈÎÎñ¼¯ºÏ
+	// ï¿½ï¿½Ç°ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ñ¼¯ºï¿½
 	private List<Task> tasks;
 
-	// Êý¾Ý´«ÊäÓòÄ£ÐÍ¶ÔÏó
+	// ï¿½ï¿½Ý´ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½Í¶ï¿½ï¿½ï¿½
 	private ProcessDto processDto;
 
-	// ÓÃÓÚ½ÓÊÕ¾­ÀíÉóÅú½á¹ûµÄ×Ö·û´®£¬Åú×¢ºÍ²µ»Ø
+	// ï¿½ï¿½ï¿½Ú½ï¿½ï¿½Õ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½×¢ï¿½Í²ï¿½ï¿½ï¿½
 	private String result;
 
 	private JbpmManager jbpmManager;
 
-	// ÓÃÓÚ½ÓÊÕÇ°Ì¨´«¹ýÀ´µÄid²ÎÊý
+	// ï¿½ï¿½ï¿½Ú½ï¿½ï¿½ï¿½Ç°Ì¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½idï¿½ï¿½ï¿½ï¿½
 	private String id;
-	// Á÷³ÌÍ¼»î¶¯×ø±ê
+	// ï¿½ï¿½ï¿½ï¿½Í¼ï¿½î¶¯ï¿½ï¿½ï¿½
 	private ActivityCoordinates activityCoordinates;
 
 	public String init() {
@@ -53,24 +53,25 @@ public class JbpmAction extends ActionSupport {
 		processDefinitions = jbpmManager.getProcessDefinitions();
 		processInstances = jbpmManager.getProcessInstances();
 		historyProcessInstances = jbpmManager.getHistoryProcessInstances();
-		System.out.println("½ÇÉ«Ãû³Æ" + roleName);
+		System.out.println("ï¿½ï¿½É«ï¿½ï¿½ï¿½" + roleName);
 		tasks = jbpmManager.getTasks(roleName);
 
 		return SUCCESS;
 	}
 
 	/**
-	 * ·¢²¼ÐÂÁ÷³Ì
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @return
 	 */
 	public String deploy() {
 		jbpmManager.deploy();
+		init();
 		return SUCCESS;
 	}
 
 	/**
-	 * É¾³ý²»ÐèµÄÒÔ²¿ÊðÁ÷³Ì
+	 * É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @return
 	 */
@@ -80,7 +81,7 @@ public class JbpmAction extends ActionSupport {
 	}
 
 	/**
-	 * Æô¶¯Ò»¸öÁ÷³Ì²¢¹ØÁªµ½ÓÃ»§
+	 * ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ì²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½
 	 * 
 	 * @return
 	 */
@@ -93,16 +94,16 @@ public class JbpmAction extends ActionSupport {
 	}
 
 	/**
-	 * ÉêÇëÇëÇó
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @return
 	 */
 	public String request() {
-		return SUCCESS;
+		return "request";
 	}
 
 	/**
-	 * ´¦ÀíÓÃ»§ÉêÇëÇëÇó
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @return
 	 */
@@ -113,11 +114,12 @@ public class JbpmAction extends ActionSupport {
 		map.put("reason", processDto.getReason());
 		map.put("name", processDto.getOwner());
 		jbpmManager.complate(processDto.getTaskId(), map);
+		init();
 		return SUCCESS;
 	}
 
 	/**
-	 * ¾­ÀíÉóÅúÇëÇó
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @return
 	 */
@@ -127,7 +129,7 @@ public class JbpmAction extends ActionSupport {
 	}
 
 	/**
-	 * ¾­ÀíÉóÅú
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @return
 	 */
@@ -137,7 +139,7 @@ public class JbpmAction extends ActionSupport {
 	}
 
 	/**
-	 * ÀÏ°åÇëÇó
+	 * ï¿½Ï°ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @return
 	 */
@@ -147,7 +149,7 @@ public class JbpmAction extends ActionSupport {
 	}
 
 	/**
-	 * ÀÏ°å´¦Àí
+	 * ï¿½Ï°å´¦ï¿½ï¿½
 	 * 
 	 * @return
 	 */
@@ -157,7 +159,7 @@ public class JbpmAction extends ActionSupport {
 	}
 
 	/**
-	 * ÇëÇóÏÔÊ¾Á÷³ÌÍ¼Æ¬
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
 	 * 
 	 * @return
 	 */
@@ -167,7 +169,7 @@ public class JbpmAction extends ActionSupport {
 	}
 
 	/**
-	 * »ñÈ¡Á÷³ÌÍ¼Æ¬
+	 * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
 	 * 
 	 * @return
 	 */

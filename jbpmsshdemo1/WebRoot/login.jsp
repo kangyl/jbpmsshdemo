@@ -37,7 +37,7 @@ table tr td {
 	</head>
 	<s:debug></s:debug>
 	<body>
-		<form action="login.html">
+		<form action="${pageContext.request.contextPath}/login_login.action">
 			<table align="center">
 				<tr>
 					<td align="center" colspan="3">

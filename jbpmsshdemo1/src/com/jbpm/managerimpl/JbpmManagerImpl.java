@@ -34,13 +34,19 @@ public class JbpmManagerImpl implements JbpmManager {
 	}
 
 	public void deploy() {
-		// repositoryService.createDeployment().addResourceFromClasspath(
-		// "/com/jbpm/source/leave.jpdl.xml").deploy();
+		 //repositoryService.createDeployment().addResourceFromClasspath("/com/jbpm/source/leave.jpdl.xml").deploy();
 		ZipInputStream zis = new ZipInputStream(this.getClass()
 				.getResourceAsStream("/com/jbpm/source/leave.zip"));
-		// ·¢ÆğÁ÷³Ì£¬½ö½ö¾ÍÊÇÔ¤¶¨ÒåÈÎÎñ£¬¼´ÔÚÏµÍ³ÖĞ´´½¨Ò»¸öÁ÷³Ì£¬ÕâÊÇÈ«¾ÖµÄ£¬Óë¾ßÌåµÄµÇÂ½ ÓÃ»§ÎŞ¹Ø¡£È»ºó£¬ÔÚÆô¶¯Á÷³ÌÊ±£¬²ÅÓëµÇÂ½ÓÃ»§¹ØÁªÆğÀ´
-		String did = repositoryService.createDeployment()
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñ£¬¼ï¿½ï¿½ï¿½ÏµÍ³ï¿½Ğ´ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ì£ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ÖµÄ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½Â½ ï¿½Ã»ï¿½ï¿½Ş¹Ø¡ï¿½È»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		//ProcessInstance processInstance = executionService.startProcessInstanceByKey("leave");
+		//System.out.println("æµç¨‹å®ä¾‹IDï¼š"+processInstance.getId());
+		 String did = repositoryService.createDeployment()
 				.addResourcesFromZipInputStream(zis).deploy();
+//		System.out.println(did);
+	}
+	
+	public void startByKey(String key,Map<String, Object> map){
+		ProcessInstance processInstance = executionService.startProcessInstanceByKey(key, map);
 	}
 
 	public void undeploy(String id) {
@@ -100,23 +106,23 @@ public class JbpmManagerImpl implements JbpmManager {
 	}
 
 	public ActivityCoordinates findActivityCoordinates(String id) {
-		// Í¨¹ıid²éµ½Á÷³ÌÊµÀı
+		// Í¨ï¿½ï¿½idï¿½éµ½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
 		ProcessInstance processInstance = executionService
 				.findProcessInstanceById(id);
 		Set<String> activityNames = processInstance.findActiveActivityNames();
-		// CoordinatesÎªÏàÒÀÒÂÎï
+		// CoordinatesÎªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		return repositoryService.getActivityCoordinates(processInstance
 				.getProcessDefinitionId(), activityNames.iterator().next());
 
 	}
 
 	public InputStream findPicInputStream(String id) {
-		// Í¨¹ıÁ÷³ÌÊµÀıid²éÕÒµ½Á÷³ÌÊµÀı
+		// Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½idï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
 		ProcessInstance processInstance = executionService
 				.findProcessInstanceById(id);
-		// Í¨¹ıÁ÷³ÌÊµÀı²éÕÒÁ÷³Ì¶¨Òåid
+		// Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½id
 		String processDefinitionId = processInstance.getProcessDefinitionId();
-		// Í¨¹ıÁ÷³Ìid²éÕÒÁ÷³Ì
+		// Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½idï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		ProcessDefinition processDefinition = repositoryService
 				.createProcessDefinitionQuery().processDefinitionId(
 						processDefinitionId).uniqueResult();

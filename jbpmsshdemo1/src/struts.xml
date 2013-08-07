@@ -4,48 +4,54 @@
     "struts-2.1.dtd">
 
 <struts>
-	<!-- 指定Web应用的默认编码集,相当于调用HttpServletRequest的setCharacterEncoding方法 -->
-    <constant name="struts.i18n.encoding" value="UTF-8"/>
-    <!-- 该属性指定需要Struts 2处理的请求后缀，该属性的默认值是action，即所有匹配*.action的请求都由Struts2处理。
-    如果用户需要指定多个请求后缀，则多个后缀之间以英文逗号（,）隔开。 -->
-    <constant name="struts.action.extension" value="html"/>
-    <!-- 设置浏览器是否缓存静态内容,默认值为true(生产环境下使用),开发阶段最好关闭 -->
-    <constant name="struts.serve.static.browserCache" value="false"/>
-    <!-- 当struts的配置文件修改后,系统是否自动重新加载该文件,默认值为false(生产环境下使用),开发阶段最好打开 -->
-    <constant name="struts.configuration.xml.reload" value="false"/>
-    <!-- 开发模式下使用,这样可以打印出更详细的错误信息 -->
-    <constant name="struts.devMode" value="true" />
-     <!-- 默认的视图主题 -->
-    <constant name="struts.ui.theme" value="simple" />
-    <constant name="struts.objectFactory" value="spring" />
+		<!-- 相当于执行了HttpServletRequest的setCharacterEncoding("UTF-8") -->
+ 	<constant value="UTF-8" name="struts.i18n.encoding"/>
+ 	<!-- Struts2处理的请求后缀 -->
+ 	<constant value="action" name="struts.action.extension"/>
+ 	<!-- 浏览器是否缓存静态内容 -->
+ 	<constant value="false" name="struts.serve.static.browserCache"/>
+	<!-- 引入其他的struts配置文件 -->
     <!-- 全局 -->
- 	<package name="global" namespace="/" extends="struts-default">
- 		<global-results>
+    	 <package name="crud-default" extends="json-default">    
+		<interceptors>
+			<interceptor-stack name="crudStack">
+				<interceptor-ref name="exception"/>
+                <interceptor-ref name="alias"/>
+                <interceptor-ref name="checkbox"/>
+                <interceptor-ref name="multiselect"/>
+                <interceptor-ref name="params">
+                    <param name="excludeParams">^filter_.*,dojo\..*,^struts\..*</param>
+                </interceptor-ref>
+                <interceptor-ref name="servletConfig"/>
+                <interceptor-ref name="prepare"/>
+                <interceptor-ref name="chain"/>
+                <interceptor-ref name="modelDriven"/>
+                <interceptor-ref name="fileUpload"/>
+                <interceptor-ref name="staticParams"/>
+                <interceptor-ref name="actionMappingParams"/>
+                <interceptor-ref name="params">
+                    <param name="excludeParams">^filter_.*,dojo\..*,^struts\..*</param>
+                </interceptor-ref>
+                <interceptor-ref name="conversionError"/>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="crudStack" />
+		<global-results>
  			<result type="redirect">index.jsp</result>
  			<result name="login" >login.jsp</result>
- 		</global-results>
-    </package> 
+		</global-results>		
+	</package> 
 	
 	
-	<package name="user" extends="json-default" >
+	<package name="user" extends="crud-default" >
 		<action name="user" class="com.kyl.action.UserAction">
 			<result name="success">success.jsp</result>
 			<!--   <result name="addUser" type="redirect">userAction!fetchUserList</result> 
 			<result name="deleteUser" type="json"></result> -->
 		</action>
 	</package>
-	<package name="web" namespace="/" extends="global">
-		<interceptors>
-			<interceptor name="loginInterceptor" class="com.jbpm.interceptor.LoginInterceptor">
-			</interceptor>
-			<interceptor-stack name="myAdminStack">
-				<interceptor-ref name="loginInterceptor">
-				</interceptor-ref>
-				<interceptor-ref name="defaultStack" />
-			</interceptor-stack>
-		</interceptors>
-		<default-interceptor-ref name="myAdminStack" />
-		<default-action-ref name="index"></default-action-ref>
+
+		<!-- 
 		<action name="index" class="com.jbpm.action.JbpmAction" method="init">
 			<result>index.jsp</result>
 		</action>
@@ -72,6 +78,16 @@
 		<action name="view" class="com.jbpm.action.JbpmAction" method="view">
 			<interceptor-ref name="defaultStack"></interceptor-ref>
 			<result>/view.jsp</result>
+		</action>
+		-->
+	<package name="package-json" namespace="/" extends="crud-default">
+		<action name="jbpm_*" class="com.jbpm.action.JbpmAction" method="{1}">
+			<result name="SUCCESS">index.jsp</result>
+			<result name="request">request.jsp</result>
+		</action>
+		<action name="login_*" class="com.jbpm.action.LoginAction" method="{1}">
+			<result name="SUCCESS"  type="chain">jbpm_init.action</result>
+			<result name="login">login.jsp</result>
 		</action>
 	</package>
 </struts>

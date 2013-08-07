@@ -26,7 +26,7 @@
 	<s:debug></s:debug>
 	<body>
 
-		<img src="pic.html?id=${id }"
+		<img src="${pageContext.request.contextPath}/jbpm_pic.action?id=${id }"
 			style="position: absolute; left: 0px; top: 0px;">
 		<div
 			style="position:absolute;border:1px solid red;left:${activityCoordinates.x }px;top:${activityCoordinates.y }px;width:${activityCoordinates.width }px;height:${activityCoordinates.height}px;"></div>

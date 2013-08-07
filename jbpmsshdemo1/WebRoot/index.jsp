@@ -46,10 +46,10 @@ table tr td {
 					${user }
 				</td>
 				<td>
-					<a href="unlogin.html">注销登录</a>
+					<a href="${pageContext.request.contextPath}/login_unlogin.action">注销登录</a>
 				</td>
 				<td>
-					<a href="login.html">登录</a>
+					<a href="${pageContext.request.contextPath}/login_login.action">登录</a>
 				</td>
 				<td colspan="3"></td>
 			</tr>
@@ -65,7 +65,7 @@ table tr td {
 					如果想发布流程请点击右边的链接
 				</td>
 				<td colspan="4">
-					<a href="deploy.html">点击发布新流程</a>
+					<a href="${pageContext.request.contextPath}/jbpm_deploy.action">点击发布新流程</a>
 				</td>
 			</tr>
 			<tr>
@@ -113,10 +113,10 @@ table tr td {
 						${version }
 					</td>
 					<td>
-						<a href="undeploy.html?id=${deploymentId }">删除流程</a>
+						<a href="${pageContext.request.contextPath}/jbpm_undeploy.action?id=${deploymentId }">删除流程</a>
 					</td>
 					<td>
-						<a href="start.html?id=${id }">启动流程</a>
+						<a href="${pageContext.request.contextPath}/jbpm_start.action?id=${id }">启动流程</a>
 					</td>
 				</tr>
 			</s:iterator>
@@ -173,7 +173,7 @@ table tr td {
 						<s:property value="findActiveActivityNames()" />
 					</td>			
 					<td>
-						<a href="view.html?id=${id }">查看流程图</a>
+						<a href="${pageContext.request.contextPath}/jbpm_view.action?id=${id }">查看流程图</a>
 					</td>
 				</tr>
 			</s:iterator>
@@ -231,7 +231,7 @@ table tr td {
 					<s:property value="#task.assignee" />
 					</td>
 					<td>
-						<a href="${formResourceName }?id=${id}">办理</a>
+						<a href="${pageContext.request.contextPath}/jbpm_${formResourceName }.action?id=${id}">办理</a>
 					</td>
 				</tr>
 			</s:iterator>

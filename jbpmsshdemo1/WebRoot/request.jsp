@@ -32,13 +32,13 @@
 			<!-- 此是普通用户，也就是变量owner的处理页面，不管当前登陆什么角色，统一提交完成任务的请求即可，
    	                                 在submit.jsp里调用完成任务的API，至于会如何完成,完全由流程定义图决定，我们编程只管调用完成即可 
             -->
-			<form action="submit.html" method="post">
+			<form action="${pageContext.request.contextPath}/jbpm_submit.action" method="post">
 				<input type="hidden" name="processDto.taskId" value="${param.id}">
 				<!-- 此处的owner与day两个name值要与流程图中定义的一致,owner是在xml中定义的变量，不属于具体登陆者 -->
 				申请人：
 				<input type="text" name="processDto.owner" value="${user}" />
 				<br />
-				请假时间：
+				请假天数：
 				<input type="text" name="processDto.day" value="" />
 				<br />
 				请假原因：

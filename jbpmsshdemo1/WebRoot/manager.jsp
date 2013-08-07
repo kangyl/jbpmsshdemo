@@ -29,7 +29,7 @@
 			<legend>
 				经理审核 username: ${user } param.id:${param.id }
 			</legend>
-			<form action="submitManager.html" method="post">
+			<form action="${pageContext.request.contextPath}/jbpm_submitManager.action" method="post">
 				<input type="hidden" name="id" value="${param.id}">
 				申请人：
 				<s:property value="map['owner']" />
